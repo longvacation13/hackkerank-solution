@@ -1,0 +1,72 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    // Write your code here.
+    // Write your code here.
+    // Queue 랑 Stack이 일치하면 palindrome  
+    public static int top = 0;
+    public static int first = 0;
+    public static int end = 0; 
+    public static LinkedList<Character> stackList = new LinkedList<Character>();
+    public static LinkedList<Character> queueList = new LinkedList<Character>();
+    
+    public void pushCharacter(char c) //stack 에 char 값 집어넣음 
+    {
+        stackList.add(c);
+        top++; 
+        
+    }
+    
+    public void enqueueCharacter(char c)
+    {
+        queueList.add(c); 
+        end++; 
+    }
+    
+    public Character popCharacter()
+    {
+        char ret = stackList.get(top-1);
+        top--; 
+        return ret;  
+    }
+    
+    public Character dequeueCharacter()
+    {
+        char ret = queueList.get(first);
+        first++;
+        return ret; 
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        scan.close();
+
+        // Convert input String to an array of characters:
+        char[] s = input.toCharArray();
+
+        // Create a Solution object:
+        Solution p = new Solution();
+
+        // Enqueue/Push all chars to their respective data structures:
+        for (char c : s) {
+            p.pushCharacter(c);
+            p.enqueueCharacter(c);
+        }
+
+        // Pop/Dequeue the chars at the head of both data structures and compare them:
+        boolean isPalindrome = true;
+        for (int i = 0; i < s.length/2; i++) {
+            if (p.popCharacter() != p.dequeueCharacter()) {
+                isPalindrome = false;                
+                break;
+            }
+        }
+
+        //Finally, print whether string s is palindrome or not.
+        System.out.println( "The word, " + input + ", is " 
+                           + ( (!isPalindrome) ? "not a palindrome." : "a palindrome." ) );
+    }
+}
